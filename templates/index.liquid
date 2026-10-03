@@ -1,0 +1,151 @@
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-logo">
+      <svg width="60" height="60" viewBox="0 0 100 100" fill="none" stroke="#9d9a7f" stroke-width="2">
+        <line x1="50" y1="15" x2="50" y2="85"></line>
+        <line x1="40" y1="25" x2="60" y2="25"></line>
+        <line x1="35" y1="35" x2="65" y2="35"></line>
+        <line x1="30" y1="45" x2="70" y2="45"></line>
+        <line x1="35" y1="55" x2="65" y2="55"></line>
+        <line x1="40" y1="65" x2="60" y2="65"></line>
+        <line x1="45" y1="75" x2="55" y2="75"></line>
+      </svg>
+    </div>
+    
+    <div class="hero-tagline">Guidance for Growth, Solutions for Life</div>
+    
+    <h1>THE SOLUTION GUIDE</h1>
+    
+    <p class="hero-subtitle">Transform Your Relationships & Unlock Your Potential</p>
+    
+    <div class="hero-quote">"The art of winning people over by making them your friends"</div>
+    
+    <button class="cta-button" onclick="document.querySelector('.products-section').scrollIntoView({behavior: 'smooth'})">Explore Now</button>
+  </div>
+</section>
+
+<section class="products-section">
+  <div class="section-header">
+    <h2>Our Premium Collection</h2>
+    <p>Proven strategies and actionable guidance for personal growth and success</p>
+  </div>
+  
+  <div class="products-grid">
+    {% for product in collections.all.products %}
+      <div class="product-card" data-product-id="{{ product.id }}">
+        <div class="product-image">
+          {% if product.featured_image %}
+            <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title }}" loading="lazy">
+          {% else %}
+            <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+              <rect width="200" height="200" fill="#e8e5e0"/>
+              <circle cx="100" cy="60" r="40" fill="none" stroke="#9d9a7f" stroke-width="1.5"/>
+              <line x1="100" y1="35" x2="100" y2="85" stroke="#9d9a7f" stroke-width="1.5"/>
+              <line x1="80" y1="50" x2="120" y2="50" stroke="#9d9a7f" stroke-width="1"/>
+              <line x1="75" y1="65" x2="125" y2="65" stroke="#9d9a7f" stroke-width="1"/>
+              <line x1="72" y1="80" x2="128" y2="80" stroke="#9d9a7f" stroke-width="1"/>
+              <text x="100" y="140" text-anchor="middle" font-size="12" fill="#6b7060">Premium Guide</text>
+            </svg>
+          {% endif %}
+        </div>
+        
+        <div class="product-info">
+          <h3 class="product-title">{{ product.title }}</h3>
+          <p class="product-description">{{ product.description | strip_html | truncatewords: 20 }}</p>
+          
+          <div class="product-meta">
+            <span class="product-price">${{ product.price | money_without_currency }}</span>
+            <span class="product-rating">⭐ 4.9/5 (124 reviews)</span>
+          </div>
+          
+          <button class="add-to-cart-btn">Add to Cart</button>
+        </div>
+      </div>
+    {% else %}
+      <div class="product-card">
+        <div class="product-image" style="background: #e8e5e0; min-height: 300px; display: flex; align-items: center; justify-content: center;">
+          <p style="color: #9d9a7f; text-align: center;">No products available yet. Add products in Shopify Admin.</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="features-container">
+    <div class="section-header">
+      <h2>Why Choose The Solution Guide?</h2>
+      <p>Experience the difference with our proven methodology</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">📚</div>
+        <h3 class="feature-title">Comprehensive Guidance</h3>
+        <p class="feature-description">In-depth strategies and actionable insights for personal and professional growth</p>
+      </div>
+      
+      <div class="feature-item">
+        <div class="feature-icon">✨</div>
+        <h3 class="feature-title">Proven Methods</h3>
+        <p class="feature-description">Tested techniques used by successful individuals worldwide</p>
+      </div>
+      
+      <div class="feature-item">
+        <div class="feature-icon">🎯</div>
+        <h3 class="feature-title">Results Focused</h3>
+        <p class="feature-description">Clear objectives and measurable outcomes for your journey</p>
+      </div>
+      
+      <div class="feature-item">
+        <div class="feature-icon">💡</div>
+        <h3 class="feature-title">Practical Solutions</h3>
+        <p class="feature-description">Real-world applications you can implement immediately</p>
+      </div>
+      
+      <div class="feature-item">
+        <div class="feature-icon">🌱</div>
+        <h3 class="feature-title">Personal Growth</h3>
+        <p class="feature-description">Transform your mindset and build lasting habits</p>
+      </div>
+      
+      <div class="feature-item">
+        <div class="feature-icon">🤝</div>
+        <h3 class="feature-title">Community Support</h3>
+        <p class="feature-description">Join a network of like-minded individuals on their growth journey</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials-section" id="about">
+  <div class="testimonials-container">
+    <div class="section-header">
+      <h2>What Our Customers Say</h2>
+      <p>Join thousands of satisfied customers who have transformed their lives</p>
+    </div>
+    
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"This guide completely transformed how I approach relationships and personal growth. The strategies are practical and the results are real. Highly recommended!"</p>
+        <p class="testimonial-author">Sarah M.</p>
+        <p class="testimonial-role">Entrepreneur & Founder</p>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"I've recommended this to everyone in my network. The insights about connecting with people are game-changing. Worth every penny!"</p>
+        <p class="testimonial-author">James T.</p>
+        <p class="testimonial-role">Sales Manager</p>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The Solution Guide gave me the confidence and tools I needed to succeed. From relationships to career, everything improved after reading this."</p>
+        <p class="testimonial-author">Emma L.</p>
+        <p class="testimonial-role">Sales Professional</p>
+      </div>
+    </div>
+  </div>
+</section>

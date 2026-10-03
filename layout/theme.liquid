@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="{{ shop.locale }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fafaf8">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{{ 'style.css' | asset_url }}">
+    {{ content_for_header }}
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="header-wrapper">
+        <div class="logo-container">
+          <div class="logo-icon">
+            <svg width="28" height="28" viewBox="0 0 100 100" fill="none" stroke="#9d9a7f" stroke-width="2">
+              <line x1="50" y1="15" x2="50" y2="85"></line>
+              <line x1="40" y1="25" x2="60" y2="25"></line>
+              <line x1="35" y1="35" x2="65" y2="35"></line>
+              <line x1="30" y1="45" x2="70" y2="45"></line>
+              <line x1="35" y1="55" x2="65" y2="55"></line>
+              <line x1="40" y1="65" x2="60" y2="65"></line>
+              <line x1="45" y1="75" x2="55" y2="75"></line>
+            </svg>
+          </div>
+          <a href="/" class="logo-text">THE SOLUTION GUIDE</a>
+        </div>
+        
+        <nav>
+          <a href="/">Home</a>
+          <a href="/collections/all">Shop</a>
+          <a href="#about">About</a>
+          <button class="cart-btn" aria-label="Shopping cart">
+            🛒
+            <span class="cart-count" style="display: none;">0</span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main role="main">
+      {{ content_for_layout }}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <div class="footer-content">
+          <div class="footer-section footer-about">
+            <h3>The Solution Guide</h3>
+            <p>Guidance for Growth, Solutions for Life.</p>
+            <p>Discover proven strategies to transform your personal and professional relationships and unlock your potential.</p>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/collections/all">Shop</a></li>
+              <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+              <li><a href="/policies/refund-policy">Returns & Refunds</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Support</h3>
+            <ul>
+              <li><a href="mailto:support@thesolutionguide.com">Contact Us</a></li>
+              <li><a href="#faq">FAQ</a></li>
+              <li><a href="#shipping">Shipping Info</a></li>
+              <li><a href="#track">Track Order</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Follow Us</h3>
+            <div class="social-links">
+              <a href="#facebook" title="Facebook">f</a>
+              <a href="#instagram" title="Instagram">📷</a>
+              <a href="#twitter" title="Twitter">𝕏</a>
+              <a href="#linkedin" title="LinkedIn">in</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; 2024 The Solution Guide. All rights reserved. | Powered by Shopify</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ 'cart.js' | asset_url }}" defer></script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<div class="products-section">
+  <div class="section-header">
+    <h2>{{ collection.title }}</h2>
+    <p>{{ collection.description }}</p>
+  </div>
+  
+  <div class="products-grid">
+    {% for product in collection.products %}
+      <div class="product-card" data-product-id="{{ product.id }}">
+        <div class="product-image">
+          {% if product.featured_image %}
+            <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title }}" loading="lazy">
+          {% else %}
+            <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+              <rect width="200" height="200" fill="#e8e5e0"/>
+              <circle cx="100" cy="60" r="40" fill="none" stroke="#9d9a7f" stroke-width="1.5"/>
+              <line x1="100" y1="35" x2="100" y2="85" stroke="#9d9a7f" stroke-width="1.5"/>
+            </svg>
+          {% endif %}
+        </div>
+        
+        <div class="product-info">
+          <h3 class="product-title">{{ product.title }}</h3>
+          <p class="product-description">{{ product.description | strip_html | truncatewords: 20 }}</p>
+          
+          <div class="product-meta">
+            <span class="product-price">${{ product.price | money_without_currency }}</span>
+            <span class="product-rating">⭐ 4.9/5</span>
+          </div>
+          
+          <button class="add-to-cart-btn">Add to Cart</button>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

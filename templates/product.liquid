@@ -1,0 +1,25 @@
+<div class="products-section">
+  <div class="product-card">
+    <div class="product-image">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | img_url: '600x600' }}" alt="{{ product.title }}">
+      {% endif %}
+    </div>
+    
+    <div class="product-info">
+      <h1 class="product-title">{{ product.title }}</h1>
+      
+      <div class="product-meta">
+        <span class="product-price">${{ product.price | money_without_currency }}</span>
+        <span class="product-rating">⭐ 4.9/5 (124 reviews)</span>
+      </div>
+      
+      <p class="product-description">{{ product.description }}</p>
+      
+      <form action="/cart/add" method="post">
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+      </form>
+    </div>
+  </div>
+</div>
