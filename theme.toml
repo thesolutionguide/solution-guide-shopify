@@ -1,0 +1,8 @@
+name = "The Solution Guide"
+description = "A premium Shopify theme for The Solution Guide product with elegant design, smooth cart functionality, and mobile responsiveness"
+version = "1.0.0"
+author = "The Solution Guide Team"
+
+[author]
+name = "The Solution Guide"
+email = "support@thesolutionguide.com"
