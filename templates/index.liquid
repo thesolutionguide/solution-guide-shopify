@@ -1,7 +1,7 @@
 <section class="hero-section">
   <div class="hero-content">
     <div class="hero-logo">
-      <svg width="60" height="60" viewBox="0 0 100 100" fill="none" stroke="#9d9a7f" stroke-width="2">
+      <svg width="60" height="60" viewBox="0 0 100 100" fill="none" stroke="#8b8680" stroke-width="2">
         <line x1="50" y1="15" x2="50" y2="85"></line>
         <line x1="40" y1="25" x2="60" y2="25"></line>
         <line x1="35" y1="35" x2="65" y2="35"></line>
@@ -12,140 +12,181 @@
       </svg>
     </div>
     
-    <div class="hero-tagline">Guidance for Growth, Solutions for Life</div>
+    <p class="tagline">TWO GUIDES. ONE QUIETER WAY FORWARD.</p>
     
-    <h1>THE SOLUTION GUIDE</h1>
+    <h1>Guidance for growth.<br><span class="italic">Solutions for life.</span></h1>
     
-    <p class="hero-subtitle">Transform Your Relationships & Unlock Your Potential</p>
+    <p class="hero-subtitle">Two practical, research-grounded guides for people who'd rather build real connection than perform it — at work, and everywhere else. Written for readers who think before they speak.</p>
     
-    <div class="hero-quote">"The art of winning people over by making them your friends"</div>
+    <div class="hero-buttons">
+      <button class="btn-primary" onclick="document.querySelector('.library-section').scrollIntoView({behavior:'smooth'})">BROWSE THE GUIDES →</button>
+      <button class="btn-secondary" onclick="document.querySelector('#why').scrollIntoView({behavior:'smooth'})">WHY THESE GUIDES WORK</button>
+    </div>
     
-    <button class="cta-button" onclick="document.querySelector('.products-section').scrollIntoView({behavior: 'smooth'})">Explore Now</button>
+    <div class="trust-badges">
+      <div class="badge-item">⭐ 4.9 / 5 average rating</div>
+      <div class="badge-item">Instant PDF download</div>
+      <div class="badge-item">Secure checkout via Stripe</div>
+    </div>
   </div>
 </section>
 
-<section class="products-section">
-  <div class="section-header">
-    <h2>Our Premium Collection</h2>
-    <p>Proven strategies and actionable guidance for personal growth and success</p>
-  </div>
-  
-  <div class="products-grid">
-    {% for product in collections.all.products %}
-      <div class="product-card" data-product-id="{{ product.id }}">
-        <div class="product-image">
-          {% if product.featured_image %}
-            <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title }}" loading="lazy">
-          {% else %}
-            <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
-              <rect width="200" height="200" fill="#e8e5e0"/>
-              <circle cx="100" cy="60" r="40" fill="none" stroke="#9d9a7f" stroke-width="1.5"/>
-              <line x1="100" y1="35" x2="100" y2="85" stroke="#9d9a7f" stroke-width="1.5"/>
-              <line x1="80" y1="50" x2="120" y2="50" stroke="#9d9a7f" stroke-width="1"/>
-              <line x1="75" y1="65" x2="125" y2="65" stroke="#9d9a7f" stroke-width="1"/>
-              <line x1="72" y1="80" x2="128" y2="80" stroke="#9d9a7f" stroke-width="1"/>
-              <text x="100" y="140" text-anchor="middle" font-size="12" fill="#6b7060">Premium Guide</text>
-            </svg>
-          {% endif %}
-        </div>
-        
-        <div class="product-info">
-          <h3 class="product-title">{{ product.title }}</h3>
-          <p class="product-description">{{ product.description | strip_html | truncatewords: 20 }}</p>
-          
-          <div class="product-meta">
-            <span class="product-price">${{ product.price | money_without_currency }}</span>
-            <span class="product-rating">⭐ 4.9/5 (124 reviews)</span>
+<div class="section-divider"></div>
+
+<section class="library-section">
+  <div class="library-container">
+    <p class="section-label">THE LIBRARY</p>
+    <h2>Two guides. Two different<br>rooms in life.</h2>
+    <p class="subtitle">Each one stands on its own. Together, they cover the two places connection matters most — your career, and everyone else.</p>
+    
+    <div class="products-grid">
+      {% for product in collections.all.products %}
+        <div class="product-card" data-product-id="{{ product.id }}">
+          <div class="product-image">
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title }}" loading="lazy">
+            {% else %}
+              <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #e8e4de 0%, #ddd8d0 100%); display: flex; align-items: center; justify-content: center;">
+                <span style="color: #8b8680;">{{ product.title }}</span>
+              </div>
+            {% endif %}
+            {% if product.metafields.guide.badge %}
+              <div class="product-badge">{{ product.metafields.guide.badge }}</div>
+            {% else %}
+              <div class="product-badge">{{ forloop.index | abs | minus: 1 | modulo: 2 | times: 1 | replace: '1', 'NEW RELEASE' | replace: '0', 'BESTSELLER' }}</div>
+            {% endif %}
           </div>
           
-          <button class="add-to-cart-btn">Add to Cart</button>
+          <div class="product-info">
+            {% if product.type %}
+              <p class="product-category">{{ product.type }}</p>
+            {% else %}
+              <p class="product-category">{% if forloop.index == 1 %}FOR ANYONE, ANYWHERE{% else %}FOR THE WORKPLACE{% endif %}</p>
+            {% endif %}
+            
+            <h3 class="product-title">{{ product.title }}</h3>
+            
+            <p class="product-description">{{ product.description | strip_html | truncatewords: 25 }}</p>
+            
+            <div class="product-meta">
+              <div class="product-specs">
+                <span>📄 PDF · {% if product.metafields.guide.pages %}{{ product.metafields.guide.pages }}{% else %}24{% endif %} pages</span>
+                <span>⚡ Instant delivery</span>
+              </div>
+            </div>
+            
+            <div class="product-price-section">
+              <span class="product-price">${{ product.price | money_without_currency }}</span>
+              {% if product.compare_at_price %}
+                <span class="product-original-price">${{ product.compare_at_price | money_without_currency }}</span>
+              {% endif %}
+            </div>
+            
+            <p class="product-purchase-type">One-time purchase</p>
+            
+            <button class="add-to-cart-btn" data-title="{{ product.title }}" data-price="{{ product.price | money_without_currency }}">+ ADD TO CART</button>
+          </div>
         </div>
-      </div>
-    {% else %}
-      <div class="product-card">
-        <div class="product-image" style="background: #e8e5e0; min-height: 300px; display: flex; align-items: center; justify-content: center;">
-          <p style="color: #9d9a7f; text-align: center;">No products available yet. Add products in Shopify Admin.</p>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-</section>
-
-<section class="features-section">
-  <div class="features-container">
-    <div class="section-header">
-      <h2>Why Choose The Solution Guide?</h2>
-      <p>Experience the difference with our proven methodology</p>
+      {% endfor %}
     </div>
     
-    <div class="features-grid">
-      <div class="feature-item">
-        <div class="feature-icon">📚</div>
-        <h3 class="feature-title">Comprehensive Guidance</h3>
-        <p class="feature-description">In-depth strategies and actionable insights for personal and professional growth</p>
+    <!-- Bundle Section -->
+    <div class="bundle-section">
+      <div class="bundle-image">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 180'%3E%3Crect fill='%23ddd8d0' width='150' height='180'/%3E%3Ctext x='75' y='90' text-anchor='middle' font-size='14' fill='%238b8680' font-family='serif'%3EBoth Guides%3C/text%3E%3C/svg%3E" alt="Bundle">
       </div>
-      
-      <div class="feature-item">
-        <div class="feature-icon">✨</div>
-        <h3 class="feature-title">Proven Methods</h3>
-        <p class="feature-description">Tested techniques used by successful individuals worldwide</p>
+      <div class="bundle-content">
+        <h3>Get both guides, the complete set</h3>
+        <p>Work and life, covered — delivered together as one download.</p>
       </div>
-      
-      <div class="feature-item">
-        <div class="feature-icon">🎯</div>
-        <h3 class="feature-title">Results Focused</h3>
-        <p class="feature-description">Clear objectives and measurable outcomes for your journey</p>
-      </div>
-      
-      <div class="feature-item">
-        <div class="feature-icon">💡</div>
-        <h3 class="feature-title">Practical Solutions</h3>
-        <p class="feature-description">Real-world applications you can implement immediately</p>
-      </div>
-      
-      <div class="feature-item">
-        <div class="feature-icon">🌱</div>
-        <h3 class="feature-title">Personal Growth</h3>
-        <p class="feature-description">Transform your mindset and build lasting habits</p>
-      </div>
-      
-      <div class="feature-item">
-        <div class="feature-icon">🤝</div>
-        <h3 class="feature-title">Community Support</h3>
-        <p class="feature-description">Join a network of like-minded individuals on their growth journey</p>
+      <div class="bundle-price">
+        <div class="bundle-discount">SAVE 20%</div>
+        <div class="bundle-price-amount">$30.00</div>
+        <div class="bundle-original">$38.00</div>
+        <button class="btn-bundle">+ ADD BUNDLE</button>
       </div>
     </div>
   </div>
 </section>
 
-<section class="testimonials-section" id="about">
-  <div class="testimonials-container">
-    <div class="section-header">
-      <h2>What Our Customers Say</h2>
-      <p>Join thousands of satisfied customers who have transformed their lives</p>
+<div class="section-divider"></div>
+
+<section class="why-section" id="why">
+  <div class="why-container">
+    <h2>Why these guides work</h2>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">📖</div>
+        <h3 class="why-title">Practical & Actionable</h3>
+        <p class="why-description">Every strategy is research-grounded and designed to implement immediately in your real life.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🎯</div>
+        <h3 class="why-title">Clear & Direct</h3>
+        <p class="why-description">No fluff. Concise, jargon-free writing that respects your time and intelligence.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">💡</div>
+        <h3 class="why-title">Evidence-Based</h3>
+        <p class="why-description">Strategies grounded in psychology, behavioral science, and real-world application.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">⚡</div>
+        <h3 class="why-title">Instant Access</h3>
+        <p class="why-description">Download your PDF immediately after purchase. No accounts. No waiting.</p>
+      </div>
     </div>
-    
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"This guide completely transformed how I approach relationships and personal growth. The strategies are practical and the results are real. Highly recommended!"</p>
-        <p class="testimonial-author">Sarah M.</p>
-        <p class="testimonial-role">Entrepreneur & Founder</p>
+  </div>
+</section>
+
+<section class="reviews-section" id="reviews">
+  <div class="reviews-container">
+    <h2>What readers say</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Finally, a guide that gets it. Practical strategies that actually work in real life. Changed how I approach conversations at work."</p>
+        <p class="review-author">Sarah M.</p>
+        <p class="review-role">Entrepreneur</p>
       </div>
-      
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"I've recommended this to everyone in my network. The insights about connecting with people are game-changing. Worth every penny!"</p>
-        <p class="testimonial-author">James T.</p>
-        <p class="testimonial-role">Sales Manager</p>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The insights are golden. Clear, actionable, and backed by research. Worth every penny and then some."</p>
+        <p class="review-author">James T.</p>
+        <p class="review-role">Sales Manager</p>
       </div>
-      
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"The Solution Guide gave me the confidence and tools I needed to succeed. From relationships to career, everything improved after reading this."</p>
-        <p class="testimonial-author">Emma L.</p>
-        <p class="testimonial-role">Sales Professional</p>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I bought both guides and couldn't put them down. This is the book I wish I'd had at the start of my career."</p>
+        <p class="review-author">Emma L.</p>
+        <p class="review-role">Professional</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section" id="faq">
+  <div class="faq-container">
+    <h2>Questions</h2>
+    <div class="faq-item">
+      <h3 class="faq-question">What format is the guide?</h3>
+      <p class="faq-answer">The guides are delivered as downloadable PDFs that you can read on any device, anytime, anywhere. No account needed.</p>
+    </div>
+    <div class="faq-item">
+      <h3 class="faq-question">Can I return or refund?</h3>
+      <p class="faq-answer">Digital purchases are generally non-refundable, but if you have issues accessing your guide, contact us immediately and we'll help.</p>
+    </div>
+    <div class="faq-item">
+      <h3 class="faq-question">How long are the guides?</h3>
+      <p class="faq-answer">Each guide is 20-24 pages designed for focused, distraction-free reading. Typically 45 minutes to an hour.</p>
+    </div>
+    <div class="faq-item">
+      <h3 class="faq-question">Can I gift a guide?</h3>
+      <p class="faq-answer">Yes! Purchase the guide and forward the download link to whoever you'd like. Perfect for colleagues or friends.</p>
+    </div>
+    <div class="faq-item">
+      <h3 class="faq-question">Is there a guarantee?</h3>
+      <p class="faq-answer">If you don't find the guide valuable within 30 days, email us for a full refund. We stand behind the quality.</p>
     </div>
   </div>
 </section>

@@ -21,8 +21,8 @@ const ShopifyCart = {
       btn.addEventListener('click', (e) => {
         const card = btn.closest('.product-card');
         const productId = card.dataset.productId || Math.random();
-        const title = card.querySelector('.product-title').textContent;
-        const price = card.querySelector('.product-price').textContent;
+        const title = btn.dataset.title || card.querySelector('.product-title').textContent;
+        const price = btn.dataset.price || card.querySelector('.product-price').textContent;
         
         this.addToCart({
           id: productId,
@@ -33,10 +33,6 @@ const ShopifyCart = {
         
         this.showNotification('Added to cart!');
       });
-    });
-    
-    document.querySelector('.cart-btn')?.addEventListener('click', () => {
-      this.openCart();
     });
   },
   
@@ -142,7 +138,7 @@ const ShopifyCart = {
       <div class="cart-item" data-product-id="${item.id}">
         <div class="item-details">
           <h4>${item.title}</h4>
-          <p>${item.price}</p>
+          <p>$${item.price}</p>
         </div>
         <div class="item-controls">
           <input type="number" value="${item.quantity}" min="1" class="qty-input">
@@ -202,6 +198,13 @@ const ShopifyCart = {
   }
 };
 
+// FAQ Toggle
 document.addEventListener('DOMContentLoaded', () => {
   ShopifyCart.init();
+  
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('active');
+    });
+  });
 });

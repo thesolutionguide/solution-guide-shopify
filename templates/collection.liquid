@@ -1,7 +1,7 @@
-<div class="products-section">
-  <div class="section-header">
-    <h2>{{ collection.title }}</h2>
-    <p>{{ collection.description }}</p>
+<div class="library-container" style="max-width: 1400px; margin: 0 auto; padding: 60px 20px;">
+  <div style="text-align: center; margin-bottom: 40px;">
+    <h1 style="font-size: 48px; font-weight: 400; color: #1a1a1a; margin-bottom: 15px;">{{ collection.title }}</h1>
+    <p style="font-size: 16px; color: #5a5a5a;">{{ collection.description }}</p>
   </div>
   
   <div class="products-grid">
@@ -11,24 +11,30 @@
           {% if product.featured_image %}
             <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title }}" loading="lazy">
           {% else %}
-            <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
-              <rect width="200" height="200" fill="#e8e5e0"/>
-              <circle cx="100" cy="60" r="40" fill="none" stroke="#9d9a7f" stroke-width="1.5"/>
-              <line x1="100" y1="35" x2="100" y2="85" stroke="#9d9a7f" stroke-width="1.5"/>
-            </svg>
+            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #e8e4de 0%, #ddd8d0 100%);">
+            </div>
           {% endif %}
         </div>
         
         <div class="product-info">
+          <p class="product-category">{{ product.type }}</p>
           <h3 class="product-title">{{ product.title }}</h3>
           <p class="product-description">{{ product.description | strip_html | truncatewords: 20 }}</p>
           
           <div class="product-meta">
-            <span class="product-price">${{ product.price | money_without_currency }}</span>
-            <span class="product-rating">⭐ 4.9/5</span>
+            <div class="product-specs">
+              <span>📄 PDF · 24 pages</span>
+              <span>⚡ Instant delivery</span>
+            </div>
           </div>
           
-          <button class="add-to-cart-btn">Add to Cart</button>
+          <div class="product-price-section">
+            <span class="product-price">${{ product.price | money_without_currency }}</span>
+          </div>
+          
+          <p class="product-purchase-type">One-time purchase</p>
+          
+          <button class="add-to-cart-btn" data-title="{{ product.title }}" data-price="{{ product.price | money_without_currency }}">+ ADD TO CART</button>
         </div>
       </div>
     {% endfor %}
