@@ -1,0 +1,19 @@
+<div class="products-section">
+  <div style="max-width: 800px; margin: 0 auto;">
+    {% if article.image %}
+      <img src="{{ article.image | img_url: '800x400' }}" alt="{{ article.title }}" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 40px;">
+    {% endif %}
+    
+    <h1 style="font-size: 42px; font-weight: 300; letter-spacing: 2px; color: #2c2c2c; margin-bottom: 15px;">{{ article.title }}</h1>
+    
+    <p style="font-size: 13px; color: #9d9a7f; margin-bottom: 30px;">{{ article.published_at | date: '%B %d, %Y' }} | By {{ article.author }}</p>
+    
+    <div style="font-size: 16px; line-height: 1.9; color: #4a4a4a;">
+      {{ article.content }}
+    </div>
+    
+    <div style="margin-top: 50px; padding-top: 30px; border-top: 1px solid #e8e5e0;">
+      <a href="/blogs/{{ blog.handle }}" class="cta-button" style="display: inline-block; font-size: 12px; padding: 10px 25px;">Back to Blog</a>
+    </div>
+  </div>
+</div>

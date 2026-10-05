@@ -1,0 +1,22 @@
+<div class="products-section">
+  <div class="section-header">
+    <h1>Blog</h1>
+    <p>Latest insights and guides</p>
+  </div>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1400px; margin: 0 auto;">
+    {% for article in blog.articles %}
+      <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+        {% if article.image %}
+          <img src="{{ article.image | img_url: '400x300' }}" alt="{{ article.title }}" style="width: 100%; height: 250px; object-fit: cover;">
+        {% endif %}
+        <div style="padding: 25px;">
+          <h3 style="font-size: 20px; margin-bottom: 10px; color: #2c2c2c;">{{ article.title }}</h3>
+          <p style="font-size: 13px; color: #9d9a7f; margin-bottom: 15px;">{{ article.published_at | date: '%B %d, %Y' }}</p>
+          <p style="font-size: 14px; color: #6b7060; margin-bottom: 20px; line-height: 1.6;">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+          <a href="{{ article.url }}" class="cta-button" style="display: inline-block; font-size: 12px; padding: 10px 25px;">Read More</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

@@ -1,0 +1,121 @@
+{% layout none %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account - {{ shop.name }}</title>
+  <link rel="stylesheet" href="{{ 'style.css' | asset_url }}">
+  <style>
+    .account-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    .account-nav {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .account-sidebar {
+      background: #f5f3f0;
+      padding: 25px;
+      border-radius: 8px;
+      height: fit-content;
+    }
+    .account-sidebar a {
+      display: block;
+      padding: 12px 0;
+      color: #6b7060;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #e8e5e0;
+      transition: color 0.3s;
+    }
+    .account-sidebar a:hover {
+      color: #2c2c2c;
+    }
+    .account-content h2 {
+      font-size: 32px;
+      font-weight: 300;
+      letter-spacing: 1.5px;
+      margin-bottom: 25px;
+    }
+    .order-item {
+      background: white;
+      border: 1px solid #e8e5e0;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-wrapper">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" stroke="#9d9a7f" stroke-width="2">
+            <line x1="50" y1="15" x2="50" y2="85"></line>
+            <line x1="40" y1="25" x2="60" y2="25"></line>
+            <line x1="35" y1="35" x2="65" y2="35"></line>
+            <line x1="30" y1="45" x2="70" y2="45"></line>
+            <line x1="35" y1="55" x2="65" y2="55"></line>
+            <line x1="40" y1="65" x2="60" y2="65"></line>
+            <line x1="45" y1="75" x2="55" y2="75"></line>
+          </svg>
+        </div>
+        <a href="/" class="logo-text">THE SOLUTION GUIDE</a>
+      </div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/account/logout">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="account-container">
+    <div class="account-nav">
+      <div class="account-sidebar">
+        <a href="/account">Dashboard</a>
+        <a href="/account/orders">Orders</a>
+        <a href="/account/addresses">Addresses</a>
+        <a href="/account/logout">Logout</a>
+      </div>
+      
+      <div class="account-content">
+        <h2>Welcome, {{ customer.first_name }}!</h2>
+        <p style="color: #6b7060; margin-bottom: 30px;">Manage your account information and order history below.</p>
+        
+        <div style="background: #f5f3f0; padding: 20px; border-radius: 8px; margin-bottom: 40px;">
+          <p><strong>Email:</strong> {{ customer.email }}</p>
+          <p style="margin-top: 10px;"><strong>Member Since:</strong> {{ customer.created_at | date: '%B %Y' }}</p>
+        </div>
+        
+        <h3 style="font-size: 20px; margin-bottom: 20px;">Recent Orders</h3>
+        {% if customer.orders.size > 0 %}
+          {% for order in customer.orders limit: 5 %}
+            <div class="order-item">
+              <h4>Order #{{ order.order_number }} - {{ order.created_at | date: '%B %d, %Y' }}</h4>
+              <p style="color: #6b7060; margin-top: 8px;">Status: <strong>{{ order.financial_status_label }}</strong></p>
+              <p style="margin-top: 8px;">Total: <strong>${{ order.total_price | money_without_currency }}</strong></p>
+              <a href="{{ order.customer_url }}" style="color: #6b7060; text-decoration: underline; font-size: 13px; margin-top: 10px; display: inline-block;">View Order Details</a>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p style="color: #6b7060;">No orders yet.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="footer-container">
+      <div class="footer-bottom">
+        <p>&copy; 2024 The Solution Guide. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
